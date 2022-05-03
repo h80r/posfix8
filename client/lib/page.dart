@@ -21,7 +21,8 @@ class PostfixPage extends HookWidget {
     }, [expression.value]);
 
     final result = useState<String?>(null);
-    final isValidResult = useState(false);
+    final resultValidation = useState<String?>(null);
+    final exception = useState<String?>(null);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +58,8 @@ class PostfixPage extends HookWidget {
                       expectedResult.value,
                     );
                     result.value = response?['result'];
-                    isValidResult.value = response?['isValid'] ?? false;
+                    resultValidation.value = response?['isValid'];
+                    exception.value = response?['exception'];
                   }
                 : null,
             child: const Text('CALCULAR'),
@@ -73,6 +75,20 @@ class PostfixPage extends HookWidget {
               ),
             ),
           ),
+          if (exception.value != null)
+            StyledCard(
+              color: Colors.red.withOpacity(0.3),
+              child: Column(
+                children: [
+                  Text(
+                    'Expressão Inválida!',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(width: 150.0, child: Divider()),
+                  Text(exception.value!),
+                ],
+              ),
+            ),
           if (result.value != null)
             StyledCard(
               child: Column(
@@ -86,15 +102,17 @@ class PostfixPage extends HookWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
+                      errorText: resultValidation.value,
                     ),
                   ),
+                  if (expectedResult.value != null)
+                    StyledSwitch(
+                      text: 'Resultado esperado',
+                      value: expectedResult.value == result.value,
+                    ),
                   StyledSwitch(
-                    text: 'Resultado esperado',
-                    value: expectedResult.value == result.value,
-                  ),
-                  StyledSwitch(
-                    text: 'Resultado válido',
-                    value: isValidResult.value,
+                    text: 'Resultado validado',
+                    value: resultValidation.value == null,
                   ),
                 ],
               ),
