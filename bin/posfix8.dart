@@ -24,7 +24,7 @@ Map<String, dynamic> test(String input, {String? expected}) {
 void main() async {
   final app = Alfred();
 
-  app.get('/', (req, res) async {
+  app.post('/', (req, res) async {
     final body = await req.bodyAsJsonMap;
 
     final expression = body['expression'] as String;
