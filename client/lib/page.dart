@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import 'components/styled_card.dart';
+import 'components/styled_switch.dart';
+import 'components/styled_text_field.dart';
 import 'services.dart';
 
 class PostfixPage extends HookWidget {
@@ -18,6 +21,7 @@ class PostfixPage extends HookWidget {
     }, [expression.value]);
 
     final result = useState<String?>(null);
+    final isValidResult = useState(false);
 
     return Scaffold(
       appBar: AppBar(
@@ -26,41 +30,23 @@ class PostfixPage extends HookWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Card(
-            margin: const EdgeInsets.all(20.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  TextField(
-                    onChanged: (value) => expression.value = value,
-                    decoration: InputDecoration(
-                      hintText: 'Exemplo: (a + b) * c + d * a',
-                      helperText:
-                          r'Expressões com "\ " não serão devidamente processadas',
-                      labelText: 'Expressão Infixa',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextField(
-                    onChanged: (value) => expectedResult.value = value,
-                    decoration: InputDecoration(
-                      hintText: 'Exemplo: ab+*c.d*a.+',
-                      helperText: 'Campo opcional',
-                      labelText: 'Resultado Esperado',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+          StyledCard(
+            child: Column(
+              children: [
+                StyledTextField(
+                  onChanged: (value) => expression.value = value,
+                  hintText: 'Exemplo: (a + b) * c + d * a',
+                  helperText: r'Expressões com "\ " podem apresentar erros.',
+                  labelText: 'Expressão Infixa',
+                ),
+                const SizedBox(height: 20.0),
+                StyledTextField(
+                  onChanged: (value) => expectedResult.value = value,
+                  hintText: 'Exemplo: ab+*c.d*a.+',
+                  helperText: 'Campo opcional.',
+                  labelText: 'Resultado Esperado',
+                ),
+              ],
             ),
           ),
           ElevatedButton(
@@ -71,16 +57,15 @@ class PostfixPage extends HookWidget {
                       expectedResult.value,
                     );
                     result.value = response?['result'];
+                    isValidResult.value = response?['isValid'] ?? false;
                   }
                 : null,
-            child: const Text(
-              'CALCULAR',
-              style: TextStyle(
+            child: const Text('CALCULAR'),
+            style: ElevatedButton.styleFrom(
+              textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24.0,
               ),
-            ),
-            style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
               padding: const EdgeInsets.symmetric(
                 horizontal: 24.0,
@@ -88,7 +73,32 @@ class PostfixPage extends HookWidget {
               ),
             ),
           ),
-          if (result.value != null) Text('Resultado obtido: ${result.value}'),
+          if (result.value != null)
+            StyledCard(
+              child: Column(
+                children: [
+                  TextFormField(
+                    key: ValueKey(result.value),
+                    initialValue: result.value,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      labelText: 'Resultado Obtido',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                  ),
+                  StyledSwitch(
+                    text: 'Resultado esperado',
+                    value: expectedResult.value == result.value,
+                  ),
+                  StyledSwitch(
+                    text: 'Resultado válido',
+                    value: isValidResult.value,
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
