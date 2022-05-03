@@ -13,11 +13,11 @@ Map<String, dynamic> test(String input, {String? expected}) {
 
   if (result == null) return {'exception': 'Disparidade de parênteses'};
 
+  final isValid = isValidExpression(result);
+
   if (expected != null) {
     print('\t-> Esperado: $expected [${expected == result ? '✓' : '✗'}]');
   }
-
-  final isValid = isValidExpression(result);
   print('\t-> Validação: Expressão ${isValid == null ? 'válida' : 'inválida'}');
 
   return {'result': result, 'isValid': isValid};
