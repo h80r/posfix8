@@ -6,6 +6,7 @@ String? isValidExpression(String input) => _recursion(Stack(), input);
 
 String? _recursion(Stack<Symbol> stack, String input) {
   if (input.isEmpty) {
+    if (stack.isEmpty) return 'Erro não Identificado';
     final result = stack.pop();
     return stack.isEmpty ? null : 'Erro Não Identificado';
   }

@@ -32,7 +32,10 @@ void main() async {
     final expression = body['expression'] as String;
     final expected = body['expected'] as String?;
 
-    return test(expression, expected: expected);
+    return test(
+      expression,
+      expected: expected?.isEmpty ?? true ? null : expected,
+    );
   });
 
   await app.listen(8010);

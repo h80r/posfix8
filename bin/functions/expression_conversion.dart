@@ -25,6 +25,8 @@ String? _recursion(String input, String result, Stack<Symbol> stack) {
     while (stack.isNotEmpty) {
       final top = stack.pop();
       if (top is Parenthesis && top.isOpen) break;
+      if (stack.isEmpty) return null;
+
       result += top.value;
     }
 
