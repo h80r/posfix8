@@ -1,9 +1,11 @@
+import 'package:alfred/alfred.dart';
+
 import 'functions/expression_conversion.dart';
 import 'functions/expression_validation.dart';
 
 var testNumber = 0;
 
-void test(String input, {String? expected}) {
+Map<String, dynamic> test(String input, {String? expected}) {
   print('Teste ${testNumber++}: $input');
 
   final result = infixToPostfix(input);
@@ -15,10 +17,21 @@ void test(String input, {String? expected}) {
 
   final isValid = isValidExpression(result);
   print('\t-> Validação: Expressão ${isValid ? 'válida' : 'inválida'}');
+
+  return {'result': result, 'isValid': isValid};
 }
 
-void main(List<String> arguments) {
-  test('((aa)* (ab+ba)(bb)*a(a+b))*', expected: 'aa.*ab.ba.+.bb.*.a.ab+.*');
-  test('( 5 + 9 ) * 2 + 6 * 5', expected: '59+*2.6*5.+');
-  // print(infixToPostfix(r'\.\.'));
+void main() async {
+  final app = Alfred();
+
+  app.get('/', (req, res) async {
+    final body = await req.bodyAsJsonMap;
+
+    final expression = body['expression'] as String;
+    final expected = body['expected'] as String?;
+
+    return test(expression, expected: expected);
+  });
+
+  await app.listen(8010);
 }
