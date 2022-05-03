@@ -18,7 +18,7 @@ Map<String, dynamic> test(String input, {String? expected}) {
   }
 
   final isValid = isValidExpression(result);
-  print('\t-> Validação: Expressão ${isValid ? 'válida' : 'inválida'}');
+  print('\t-> Validação: Expressão ${isValid == null ? 'válida' : 'inválida'}');
 
   return {'result': result, 'isValid': isValid};
 }

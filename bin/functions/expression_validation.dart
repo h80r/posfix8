@@ -2,12 +2,12 @@ import 'package:stack/stack.dart';
 
 import '../models.dart';
 
-bool isValidExpression(String input) => _recursion(Stack(), input);
+String? isValidExpression(String input) => _recursion(Stack(), input);
 
-bool _recursion(Stack<Symbol> stack, String input) {
+String? _recursion(Stack<Symbol> stack, String input) {
   if (input.isEmpty) {
     final result = stack.pop();
-    return stack.isEmpty;
+    return stack.isEmpty ? null : 'Erro Não Identificado';
   }
 
   final symbol = Symbol.read(input);
@@ -20,8 +20,7 @@ bool _recursion(Stack<Symbol> stack, String input) {
   }
 
   if (stack.isEmpty) {
-    print('Unhandled exception');
-    return false;
+    return 'Erro não identificado';
   }
 
   final op2 = stack.pop();
@@ -34,8 +33,7 @@ bool _recursion(Stack<Symbol> stack, String input) {
   }
 
   if (stack.isEmpty) {
-    print('Exception: Binary operator with single operand');
-    return false;
+    return 'Operador binário sem segundo operando';
   }
 
   final op1 = stack.pop();

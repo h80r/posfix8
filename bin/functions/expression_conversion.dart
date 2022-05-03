@@ -20,15 +20,11 @@ String? _recursion(String input, String result, Stack<Symbol> stack) {
   if (symbol is Operand) return _recursion(input, result + symbol.value, stack);
 
   if (symbol is Parenthesis) {
-    if (symbol.isOpen) {
-      return _recursion(input, result, stack..push(symbol));
-    }
+    if (symbol.isOpen) return _recursion(input, result, stack..push(symbol));
 
     while (stack.isNotEmpty) {
       final top = stack.pop();
-
       if (top is Parenthesis && top.isOpen) break;
-
       result += top.value;
     }
 
@@ -39,7 +35,6 @@ String? _recursion(String input, String result, Stack<Symbol> stack) {
     final top = stack.top();
     if (top is! Operator) break;
     if (top.precedence < (symbol as Operator).precedence) break;
-
     result += stack.pop().value;
   }
 

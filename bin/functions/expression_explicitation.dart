@@ -10,18 +10,21 @@ String explicitConcatenation(Symbol currentSymbol, String remainingInput) {
       if (next is Operand || next.value == '(') {
         return '.' + remainingInput;
       }
+
       break;
     case Operator:
       if (currentSymbol.value != '*') break;
       if (next is Operand || next.value == '(') {
         return '.' + remainingInput;
       }
+
       break;
     case Parenthesis:
       if (currentSymbol.value != ')') break;
       if (next is Operand || next.value == '(') {
         return '.' + remainingInput;
       }
+
       break;
   }
 
