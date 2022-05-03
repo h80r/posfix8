@@ -11,6 +11,8 @@ Map<String, dynamic> test(String input, {String? expected}) {
   final result = infixToPostfix(input);
   print('\t-> Resposta: $result');
 
+  if (result == null) return {'exception': 'Disparidade de parênteses'};
+
   if (expected != null) {
     print('\t-> Esperado: $expected [${expected == result ? '✓' : '✗'}]');
   }
