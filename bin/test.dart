@@ -10,9 +10,6 @@ void main() {
     test('(a*b*)* ', () {
       expect(infixToPostfix('(a*b*)*'), 'a*b*.*');
     });
-    test('(a+b)(c+d)', () {
-      expect(infixToPostfix('(a+b)(c+d)'), 'ab+cd+.');
-    });
     test('(b*ab*ab*)(b*ab*ab*)*', () {
       expect(infixToPostfix('(b*ab*ab*)(b*ab*ab*)*'),
           'b*a.b*.a.b*.b*a.b*.a.b*.*.');
@@ -23,9 +20,6 @@ void main() {
     test('((aa)* (ab+ba)(bb)*a(a+b))*', () {
       expect(infixToPostfix('((aa)* (ab+ba)(bb)*a(a+b))*'),
           'aa.*ab.ba.+.bb.*.a.ab+.*');
-    });
-    test('(5 + 9) * 2 + 6 * 5', () {
-      expect(infixToPostfix('(5 + 9) * 2 + 6 * 5'), '59+*2.6*5.+');
     });
     test('( A + B ) * ( C . D )', () {
       expect(infixToPostfix('( A + B ) * ( C . D )'), 'AB+*CD..');
