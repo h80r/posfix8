@@ -105,7 +105,8 @@ class PostfixPage extends HookWidget {
                       errorText: resultValidation.value,
                     ),
                   ),
-                  if (expectedResult.value != null)
+                  if (expectedResult.value != null &&
+                      (expectedResult.value?.isNotEmpty ?? false))
                     StyledSwitch(
                       text: 'Resultado esperado',
                       value: expectedResult.value == result.value,
