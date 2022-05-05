@@ -29,8 +29,8 @@ class Operator extends Symbol {
 
   State apply(State firstOperating, [State? secondOperating]) {
     if (secondOperating == null) return kleene(firstOperating);
-    if (value == '+') return union(firstOperating, secondOperating);
-    return concatenation(firstOperating, secondOperating);
+    if (value == '+') return union(secondOperating, firstOperating);
+    return concatenation(secondOperating, firstOperating);
   }
 }
 
