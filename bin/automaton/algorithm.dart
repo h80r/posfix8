@@ -1,4 +1,4 @@
-import 'models/state.dart';
+import '../models/state.dart';
 
 State base(String key) {
   final qf = State();

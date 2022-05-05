@@ -1,3 +1,6 @@
+import '../automaton/algorithm.dart';
+import 'state.dart';
+
 class Symbol {
   const Symbol(this.value);
 
@@ -24,21 +27,19 @@ class Operator extends Symbol {
   late final bool isUnary;
   late final int precedence;
 
-  Symbol apply(Operand firstOperating, [Operand? secondOperating]) {
-    if (secondOperating != null) {
-      return Operand(firstOperating.value + secondOperating.value);
-    } // TODO: Apply binary operations
-
-    return firstOperating; // TODO: Apply unary operations
+  State apply(State firstOperating, [State? secondOperating]) {
+    if (secondOperating == null) return kleene(firstOperating);
+    if (value == '+') return union(firstOperating, secondOperating);
+    return concatenation(firstOperating, secondOperating);
   }
 }
 
 class Operand extends Symbol {
   const Operand(String value) : super(value);
+  State automaton() => base(value);
 }
 
 class Parenthesis extends Symbol {
   const Parenthesis(String value) : super(value);
-
   bool get isOpen => value == '(';
 }
