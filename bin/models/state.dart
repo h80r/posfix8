@@ -1,15 +1,17 @@
 class State {
   State()
       : children = {},
-        finalState = null,
         displayed = false,
-        id = globalId++;
+        id = globalId++ {
+    finalState = this;
+  }
 
   static var globalId = 0;
-  final int id;
 
-  Map<String, List<State>> children;
-  State? finalState;
+  final int id;
+  final Map<String, List<State>> children;
+
+  late State finalState;
   bool displayed;
 
   void addChild(String key, State value) {

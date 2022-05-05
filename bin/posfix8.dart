@@ -26,13 +26,17 @@ Map<String, dynamic> test(String input, {String? expected}) {
 }
 
 void main() {
-  final s1 = base('a');
-  final s2 = base('b');
-  final s3 = union(s1, s2);
-  final s4 = kleene(s3);
-  final s5 = base('a');
-  final s6 = concatenation(s4, s5);
-  log(s6);
+  log(
+    concatenation(
+      kleene(
+        union(
+          base('a'),
+          base('b'),
+        ),
+      ),
+      base('a'),
+    ),
+  );
 }
 
 // void main() async {

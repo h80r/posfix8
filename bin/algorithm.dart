@@ -9,7 +9,7 @@ State base(String key) {
 }
 
 State concatenation(State a, State b) => a
-  ..finalState?.addChild('ε', b)
+  ..finalState.addChild('ε', b)
   ..finalState = b.finalState;
 
 State union(State a, State b) {
@@ -18,8 +18,8 @@ State union(State a, State b) {
     ..addChild('ε', b);
 
   final qf = State();
-  a.finalState?.addChild('ε', qf);
-  b.finalState?.addChild('ε', qf);
+  a.finalState.addChild('ε', qf);
+  b.finalState.addChild('ε', qf);
 
   return q0..finalState = qf;
 }
@@ -32,7 +32,7 @@ State kleene(State a) {
     ..addChild('ε', qf);
 
   a.finalState
-    ?..addChild('ε', qf)
+    ..addChild('ε', qf)
     ..addChild('ε', a);
 
   return q0..finalState = qf;
