@@ -1,5 +1,6 @@
 import 'package:alfred/alfred.dart';
 
+import 'models/state.dart';
 import 'postfixing/expression_conversion.dart';
 import 'automaton/expression_execution.dart';
 
@@ -17,10 +18,13 @@ Map<String, dynamic> test(String input, {String? expected}) {
   if (result == null) return {'exception': 'Disparidade de parênteses'};
 
   final automaton = executeExpression(result);
-  final isValid = automaton is! String;
+  final isValid = automaton is State;
   print('\t-> Validação: Expressão ${isValid ? 'válida' : 'inválida'}');
 
-  return {'result': result, 'automaton': automaton};
+  return {
+    'result': result,
+    'automaton': isValid ? automaton.toJson() : automaton,
+  };
 }
 
 void main() async {

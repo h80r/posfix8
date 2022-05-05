@@ -18,15 +18,14 @@ class State {
     children[key] = [...?children[key], value];
   }
 
-  @override
-  String toString() {
-    if (displayed) return '{"stateId" : $id}';
+  Map<String, dynamic> toJson() {
+    if (displayed) return {'stateId': id};
     displayed = true;
 
-    final parsedChildren = children.entries
-        .map((e) =>
-            '"${e.key}": [${e.value.map((q) => q.toString()).join(', ')}]')
-        .join(', ');
-    return '{"stateId" : $id, "transitions": {$parsedChildren}}';
+    final transitions = children.map(
+      (k, v) => MapEntry(k, v.map((s) => s.toJson()).toList()),
+    );
+
+    return {'stateId': id, 'transitions': transitions};
   }
 }
