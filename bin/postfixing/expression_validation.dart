@@ -1,6 +1,6 @@
 import 'package:stack/stack.dart';
 
-import '../models.dart';
+import '../models/symbol.dart';
 
 String? isValidExpression(String input) => _recursion(Stack(), input);
 

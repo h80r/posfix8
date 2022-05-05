@@ -1,6 +1,6 @@
 import 'package:stack/stack.dart';
 
-import '../models.dart';
+import '../models/symbol.dart';
 import 'expression_explicitation.dart';
 
 String? infixToPostfix(String input) =>

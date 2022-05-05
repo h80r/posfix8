@@ -1,4 +1,4 @@
-import '../models.dart';
+import '../models/symbol.dart';
 
 String explicitConcatenation(Symbol currentSymbol, String remainingInput) {
   if (remainingInput.isEmpty) return remainingInput;

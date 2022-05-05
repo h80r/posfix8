@@ -1,7 +1,7 @@
 import 'package:alfred/alfred.dart';
 
-import 'functions/expression_conversion.dart';
-import 'functions/expression_validation.dart';
+import 'postfixing/expression_conversion.dart';
+import 'postfixing/expression_validation.dart';
 
 var testNumber = 0;
 
