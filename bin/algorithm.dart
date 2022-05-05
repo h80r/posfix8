@@ -8,7 +8,9 @@ State base(String key) {
     ..finalState = qf;
 }
 
-State concatenation(State a, State b) => a..finalState?.addChild('ε', b);
+State concatenation(State a, State b) => a
+  ..finalState?.addChild('ε', b)
+  ..finalState = b.finalState;
 
 State union(State a, State b) {
   final q0 = State()
@@ -19,7 +21,7 @@ State union(State a, State b) {
   a.finalState?.addChild('ε', qf);
   b.finalState?.addChild('ε', qf);
 
-  return q0;
+  return q0..finalState = qf;
 }
 
 State kleene(State a) {
