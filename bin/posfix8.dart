@@ -9,6 +9,8 @@ var testNumber = 0;
 Map<String, dynamic> test(String input, {String? expected}) {
   print('Teste ${testNumber++}: $input');
 
+  State.globalId = 0;
+
   final result = infixToPostfix(input);
   print('\t-> Resposta: $result');
   if (expected != null) {
