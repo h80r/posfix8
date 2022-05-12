@@ -7,6 +7,18 @@ class AutomataState {
   final Map<String, List<AutomataState>> children;
   var displayed = false;
 
+  void reset() {
+    if (!displayed) return;
+
+    displayed = false;
+
+    children.forEach((key, value) {
+      for (final child in value) {
+        child.reset();
+      }
+    });
+  }
+
   AutomataState.fromJson(Map<String, dynamic> json)
       : id = json['stateId'],
         children = (json['transitions'] as Map<String, dynamic>?)

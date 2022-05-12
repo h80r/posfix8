@@ -1,5 +1,6 @@
-import 'package:client/canvas/automata.dart';
 import 'package:flutter/material.dart';
+
+import 'package:client/canvas/graph.dart';
 
 import 'core/styled_button.dart';
 import 'core/styled_card.dart';
@@ -75,7 +76,7 @@ class OutputCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8.0),
                 child: StyledButton(
                   onPressed: () =>
-                      Navigator.pushNamed(context, AutomataCanvas.routeName),
+                      Navigator.pushNamed(context, GraphCanvas.routeName),
                   shape: const CircleBorder(),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),

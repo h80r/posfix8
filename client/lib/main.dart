@@ -1,4 +1,4 @@
-import 'package:client/canvas/automata.dart';
+import 'package:client/canvas/graph.dart';
 import 'package:client/canvas/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeCanvas.routeName,
       routes: {
         HomeCanvas.routeName: (context) => const HomeCanvas(),
-        AutomataCanvas.routeName: (context) => const AutomataCanvas(),
+        GraphCanvas.routeName: (context) => const GraphCanvas(),
       },
     );
   }
