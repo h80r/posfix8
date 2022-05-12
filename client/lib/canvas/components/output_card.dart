@@ -1,5 +1,7 @@
+import 'package:client/canvas/automata.dart';
 import 'package:flutter/material.dart';
 
+import 'core/styled_button.dart';
 import 'core/styled_card.dart';
 import 'core/styled_switch.dart';
 
@@ -52,15 +54,36 @@ class OutputCard extends StatelessWidget {
               ),
             ),
           ),
-          if (expectedResult.isNotEmpty)
-            StyledSwitch(
-              text: 'Resultado esperado',
-              value: expectedResult == result,
-            ),
-          StyledSwitch(
-            text: 'Resultado validado',
-            value: resultValidation == null ||
-                (resultValidation?.isEmpty ?? false),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  if (expectedResult.isNotEmpty)
+                    StyledSwitch(
+                      text: 'Resultado esperado',
+                      value: expectedResult == result,
+                    ),
+                  StyledSwitch(
+                    text: 'Resultado validado',
+                    value: resultValidation == null ||
+                        (resultValidation?.isEmpty ?? false),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: StyledButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, AutomataCanvas.routeName),
+                  shape: const CircleBorder(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.android),
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),

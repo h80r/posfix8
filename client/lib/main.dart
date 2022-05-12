@@ -1,3 +1,4 @@
+import 'package:client/canvas/automata.dart';
 import 'package:client/canvas/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,11 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blueGrey,
         brightness: Brightness.dark,
       ),
-      home: const HomeCanvas(),
+      initialRoute: HomeCanvas.routeName,
+      routes: {
+        HomeCanvas.routeName: (context) => const HomeCanvas(),
+        AutomataCanvas.routeName: (context) => const AutomataCanvas(),
+      },
     );
   }
 }

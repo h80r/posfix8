@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:client/provider/canvas/home.dart';
 
+import 'components/core/styled_button.dart';
 import 'components/input_card.dart';
 import 'components/output_card.dart';
 
 class HomeCanvas extends ConsumerWidget {
   const HomeCanvas({super.key});
+
+  static const routeName = '/';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,20 +26,9 @@ class HomeCanvas extends ConsumerWidget {
             onExpressionChanged: actions.onExpressionChanged,
             onExpectedChanged: actions.onExpectedChanged,
           ),
-          ElevatedButton(
+          StyledButton(
             onPressed:
                 state.currentExpression.isEmpty ? null : actions.onCalculate,
-            style: ElevatedButton.styleFrom(
-              textStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24.0,
-              ),
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 12.0,
-              ),
-            ),
             child: const Text('CALCULAR'),
           ),
           OutputCard(

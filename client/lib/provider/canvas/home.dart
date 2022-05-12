@@ -1,16 +1,24 @@
+import 'package:client/provider/canvas/automata.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:client/schema/home.dart';
+import 'package:client/schema/canvas/home.dart';
 
 import '../services.dart';
 
 class HomeNotifier extends StateNotifier<HomeSchema> {
-  HomeNotifier(this._services) : super(HomeSchema.initial());
+  HomeNotifier(
+    this._services,
+    this._automataNotifier,
+  ) : super(HomeSchema.initial());
 
   final ServicesProvider _services;
+  final StateNotifier _automataNotifier;
 
   static final provider = StateNotifierProvider<HomeNotifier, HomeSchema>(
-    (ref) => HomeNotifier(ref.watch(ServicesProvider.provider)),
+    (ref) => HomeNotifier(
+      ref.watch(ServicesProvider.provider),
+      ref.watch(automataProvider.notifier),
+    ),
   );
 
   void onExpressionChanged(String? value) {
@@ -26,6 +34,8 @@ class HomeNotifier extends StateNotifier<HomeSchema> {
       state.currentExpression,
       state.expectedResult,
     );
+
+    _automataNotifier.state = response?['automaton'];
 
     state = state.copyWith(
       result: response?['result'],
