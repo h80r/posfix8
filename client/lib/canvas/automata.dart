@@ -11,6 +11,7 @@ class AutomataCanvas extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     print(ref.read(automataProvider));
+
     return Scaffold(
       appBar: AppBar(title: const Text('Automata Visualization')),
       body: Center(

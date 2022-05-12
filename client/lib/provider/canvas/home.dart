@@ -1,4 +1,5 @@
 import 'package:client/provider/canvas/automata.dart';
+import 'package:client/schema/automata_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:client/schema/canvas/home.dart';
@@ -35,7 +36,7 @@ class HomeNotifier extends StateNotifier<HomeSchema> {
       state.expectedResult,
     );
 
-    _automataNotifier.state = response?['automaton'];
+    _automataNotifier.state = AutomataState.fromJson(response?['automaton']);
 
     state = state.copyWith(
       result: response?['result'],
