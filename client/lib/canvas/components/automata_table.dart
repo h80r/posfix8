@@ -4,9 +4,11 @@ class AutomataTable extends StatelessWidget {
   const AutomataTable({
     Key? key,
     required this.automata,
+    required this.colors,
   }) : super(key: key);
 
   final Map<String, dynamic> automata;
+  final Map<String, Color> colors;
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +20,42 @@ class AutomataTable extends StatelessWidget {
       children: [
         TableRow(
           children: [
-            const TableCell(
-              child: Text(''),
-            ),
-            ...alphabet.map((e) => TableCell(child: Text(e))).toList(),
+            const TableCell(child: Text('')),
+            ...alphabet
+                .map((e) => TableCell(
+                      child: Text(
+                        e,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: colors[e],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ))
+                .toList(),
           ],
         ),
         ...List.generate(
-            states.length,
-            (i) => TableRow(
-                  children: [
-                    TableCell(
-                      child: Text(automata['states'][i]),
-                    ),
-                    ...table[i]
-                        .map((e) => TableCell(
-                              child: Text(e == null ? '' : '{${e.join(', ')}}'),
-                            ))
-                        .toList(),
-                  ],
-                ))
+          states.length,
+          (i) => TableRow(
+            children: [
+              TableCell(
+                child: Text(
+                  automata['states'][i],
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              ...table[i]
+                  .map((e) => TableCell(
+                        child: Text(
+                          e == null ? '' : '{${e.join(', ')}}',
+                          textAlign: TextAlign.center,
+                        ),
+                      ))
+                  .toList(),
+            ],
+          ),
+        )
       ],
     );
   }
