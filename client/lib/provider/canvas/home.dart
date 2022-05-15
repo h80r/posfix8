@@ -39,9 +39,9 @@ class HomeNotifier extends StateNotifier<HomeSchema> {
     _automataNotifier.state = AutomataState.fromJson(response?['automaton']);
 
     state = state.copyWith(
-      result: response?['result'],
-      resultValidation: response?['isValid'],
-      exception: response?['exception'],
+      result: response?['result'] ?? '',
+      resultValidation: response?['error'] ?? '',
+      exception: response?['exception'] ?? '',
     );
   }
 }

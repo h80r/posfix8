@@ -32,8 +32,10 @@ class HomeSchema {
       currentExpression ?? this.currentExpression,
       expectedResult ?? this.expectedResult,
       result ?? this.result,
-      resultValidation ?? this.resultValidation,
-      exception ?? this.exception,
+      resultValidation?.isEmpty ?? false
+          ? null
+          : resultValidation ?? this.resultValidation,
+      exception?.isEmpty ?? false ? null : exception ?? this.exception,
     );
   }
 }

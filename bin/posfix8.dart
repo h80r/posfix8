@@ -26,8 +26,8 @@ Map<String, dynamic> test(String input, {String? expected}) {
 
   return {
     'result': result,
-    'automaton': isValid ? automaton.toJson() : automaton,
-    'table': isValid ? automaton.toTable() : null,
+    'error': isValid ? null : automaton,
+    'automaton': isValid ? automaton.toTable() : null,
   };
 }
 
