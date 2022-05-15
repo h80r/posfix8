@@ -9,16 +9,20 @@ import 'package:client/schema/automata_state.dart';
 import '../automata.dart';
 
 class GraphNotifier extends StateNotifier<Graph> {
-  GraphNotifier(this._automata, this._colorMap, this._rnd) : super(Graph()) {
+  GraphNotifier(
+    this._automata,
+    this._colorMap,
+    this._kGoldenAngle,
+  ) : super(Graph()) {
     loadAutomata();
   }
 
   final AutomataState _automata;
   final Map<String, Color> _colorMap;
-  final Random _rnd;
+  final double _kGoldenAngle;
 
   static final provider = StateNotifierProvider<GraphNotifier, Graph>((ref) {
-    return GraphNotifier(ref.watch(automataProvider), {}, Random());
+    return GraphNotifier(ref.watch(automataProvider), {}, 180 * (3 - sqrt(5)));
   });
 
   void loadAutomata() {
@@ -54,12 +58,14 @@ class GraphNotifier extends StateNotifier<Graph> {
   Color _getColor(String id) {
     if (_colorMap.containsKey(id)) return _colorMap[id]!;
 
-    final color = Color.fromARGB(
-      255,
-      _rnd.nextInt(255) ~/ 2 + 128,
-      _rnd.nextInt(255) ~/ 2 + 128,
-      _rnd.nextInt(255) ~/ 2 + 128,
-    );
+    final color = id == 'ε'
+        ? Colors.white.withOpacity(0.5)
+        : HSLColor.fromAHSL(
+            1.0,
+            (_colorMap.length * _kGoldenAngle) % 360.0,
+            1.0,
+            0.75,
+          ).toColor();
 
     _colorMap[id] = color;
     return color;
