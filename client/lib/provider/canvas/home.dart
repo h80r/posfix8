@@ -1,8 +1,8 @@
-import 'package:client/provider/automata.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:client/schema/canvas/home.dart';
 
+import '../automata.dart';
 import '../services.dart';
 
 class HomeNotifier extends StateNotifier<HomeSchema> {

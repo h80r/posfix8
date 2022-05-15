@@ -1,7 +1,8 @@
-import 'package:client/canvas/graph.dart';
-import 'package:client/canvas/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'canvas/graph.dart';
+import 'canvas/home.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorSchemeSeed: Colors.blueGrey,

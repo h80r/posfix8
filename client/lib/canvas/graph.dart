@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphview/GraphView.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:client/provider/canvas/graph.dart';
 
@@ -18,7 +18,12 @@ class GraphCanvas extends ConsumerWidget {
     final colors = ref.watch(GraphNotifier.provider.notifier).colorMap;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Automata Visualization')),
+      appBar: AppBar(
+        title: const Text('Automata Visualization'),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.table_chart))
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
