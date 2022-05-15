@@ -36,7 +36,7 @@ class GraphCanvas extends ConsumerWidget {
                 child: GraphView(
                   graph: graph,
                   algorithm: SugiyamaAlgorithm(SugiyamaConfiguration()),
-                  builder: (Node node) => const GraphDot(),
+                  builder: (Node node) => GraphDot(node),
                 ),
               ),
             ),
