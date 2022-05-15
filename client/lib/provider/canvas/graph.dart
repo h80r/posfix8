@@ -15,7 +15,7 @@ class GraphNotifier extends StateNotifier<Graph> {
     loadAutomata();
   }
 
-  final Map<String, Map<String, List<String>>> _automata;
+  final Map<String, dynamic> _automata;
   final Map<String, Color> _colorMap;
   final double _kGoldenAngle;
 
@@ -26,20 +26,35 @@ class GraphNotifier extends StateNotifier<Graph> {
   void loadAutomata() {
     final newGraph = Graph();
 
-    final states = _automata.keys.map((e) => e.replaceAll('*', '')).toList();
+    final states = (_automata['states'] as List)
+        .cast<String>()
+        .map((e) => e.replaceAll('*', ''))
+        .toList();
+    final alphabet = (_automata['alphabet'] as List).cast<String>();
+    final table = (_automata['table'] as List)
+        .cast<List>()
+        .map((e) => e.cast<List?>().map((e) => e?.cast<String>()).toList())
+        .toList();
 
     final nodes = states.map(Node.Id).toList();
     newGraph.addNodes(nodes);
 
     final edges = <Edge>[];
-    for (final state in _automata.values) {
-      for (final transition in state.entries) {
-        for (final nextState in transition.value) {
+    for (var i = 0; i < states.length; i++) {
+      for (var j = 0; j < alphabet.length; j++) {
+        final transition = table[i][j];
+        if (transition == null) continue;
+
+        final from = nodes[i];
+        final symbol = alphabet[j];
+
+        for (final to in transition) {
+          final toNode = nodes.firstWhere((e) => e.key?.value == to);
           edges.add(Edge(
-            nodes[_automata.values.toList().indexOf(state)],
-            nodes[states.indexOf(nextState)],
+            from,
+            toNode,
             paint: Paint()
-              ..color = _getColor(transition.key)
+              ..color = _getColor(symbol)
               ..strokeWidth = 2.0,
           ));
         }

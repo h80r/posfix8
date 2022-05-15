@@ -35,19 +35,7 @@ class HomeNotifier extends StateNotifier<HomeSchema> {
       state.expectedResult,
     );
 
-    final automaton = response?['automaton'] as Map<String, dynamic>?;
-
-    _automataNotifier.state = automaton?.map(
-      (key, value) => MapEntry(
-        key,
-        (value as Map<String, dynamic>).map(
-          (key, value) => MapEntry(
-            key,
-            (value as List).cast<String>(),
-          ),
-        ),
-      ),
-    );
+    _automataNotifier.state = response?['automaton'] as Map<String, dynamic>?;
 
     state = state.copyWith(
       result: response?['result'] ?? '',

@@ -1,34 +1,48 @@
 import '../models/state.dart';
 
 extension TableGeneration on State {
-  Map<String, Map<String, List<String>>> toTable() {
+  Map<String, dynamic> toTable() {
     reset();
 
-    final table = <String, Map<String, List<String>>>{};
-    _lineGeneration(table);
+    final map = <String, Map<String, List<String>>>{};
+    _lineGeneration(map);
 
     reset();
 
-    final lastState = table[finalState.id.toString()]!;
-    table.remove(finalState.id.toString());
+    final lastState = map[finalState.id.toString()]!;
+    map.remove(finalState.id.toString());
 
-    final namedTable = table.map((key, value) => MapEntry('q$key', value));
+    final namedTable = map.map((key, value) => MapEntry('q$key', value));
     namedTable.addEntries([MapEntry('*q${finalState.id}', lastState)]);
 
-    return namedTable;
+    final states = namedTable.keys.toList();
+    final alphabet = namedTable.values.expand((e) => e.keys).toSet().toList();
+    final matrix = List.generate(
+      states.length,
+      (i) => List.generate(
+        alphabet.length,
+        (j) => namedTable[states[i]]?[alphabet[j]],
+      ),
+    );
+
+    return {
+      'states': states,
+      'alphabet': alphabet,
+      'table': matrix,
+    };
   }
 
-  void _lineGeneration(Map<String, Map<String, List<String>>> table) {
+  void _lineGeneration(Map<String, Map<String, List<String>>> map) {
     if (displayed) return;
 
-    table['$id'] = children.map(
+    map['$id'] = children.map(
       (k, v) => MapEntry(k, v.map((s) => 'q${s.id}').toList()),
     );
     displayed = true;
 
     children.forEach((key, value) {
       for (final child in value) {
-        child._lineGeneration(table);
+        child._lineGeneration(map);
       }
     });
   }
