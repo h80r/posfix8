@@ -35,7 +35,11 @@ class GraphCanvas extends ConsumerWidget {
                 maxScale: 100,
                 child: GraphView(
                   graph: graph,
-                  algorithm: SugiyamaAlgorithm(SugiyamaConfiguration()),
+                  algorithm: SugiyamaAlgorithm(
+                    SugiyamaConfiguration()
+                      ..levelSeparation = 50
+                      ..nodeSeparation = 50,
+                  ),
                   builder: (Node node) => GraphDot(node),
                 ),
               ),
