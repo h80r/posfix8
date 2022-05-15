@@ -26,15 +26,11 @@ class GraphNotifier extends StateNotifier<Graph> {
   void loadAutomata() {
     final newGraph = Graph();
 
-    final states = (_automata['states'] as List)
-        .cast<String>()
+    final states = (_automata['states'] as List<String>)
         .map((e) => e.replaceAll('*', ''))
         .toList();
-    final alphabet = (_automata['alphabet'] as List).cast<String>();
-    final table = (_automata['table'] as List)
-        .cast<List>()
-        .map((e) => e.cast<List?>().map((e) => e?.cast<String>()).toList())
-        .toList();
+    final alphabet = _automata['alphabet'] as List<String>;
+    final table = _automata['table'] as List<List<List<String>?>>;
 
     final nodes = states.map(Node.Id).toList();
     newGraph.addNodes(nodes);

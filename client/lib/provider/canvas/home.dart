@@ -35,7 +35,24 @@ class HomeNotifier extends StateNotifier<HomeSchema> {
       state.expectedResult,
     );
 
-    _automataNotifier.state = response?['automaton'] as Map<String, dynamic>?;
+    final automaton = response?['automaton'] as Map<String, dynamic>?;
+
+    if (automaton != null) {
+      final states = (automaton['states'] as List).cast<String>();
+
+      final alphabet = (automaton['alphabet'] as List).cast<String>();
+
+      final table = (automaton['table'] as List)
+          .cast<List>()
+          .map((e) => e.cast<List?>().map((e) => e?.cast<String>()).toList())
+          .toList();
+
+      _automataNotifier.state = {
+        'states': states,
+        'alphabet': alphabet,
+        'table': table,
+      };
+    }
 
     state = state.copyWith(
       result: response?['result'] ?? '',
