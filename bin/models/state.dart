@@ -18,6 +18,18 @@ class State {
     children[key] = [...?children[key], value];
   }
 
+  void reset() {
+    if (!displayed) return;
+
+    displayed = false;
+
+    children.forEach((key, value) {
+      for (final child in value) {
+        child.reset();
+      }
+    });
+  }
+
   Map<String, dynamic> toJson() {
     if (displayed) return {'stateId': id};
     displayed = true;

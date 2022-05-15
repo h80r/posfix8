@@ -1,5 +1,6 @@
 import 'package:alfred/alfred.dart';
 
+import 'automaton/table_generation.dart';
 import 'models/state.dart';
 import 'postfixing/expression_conversion.dart';
 import 'automaton/expression_execution.dart';
@@ -26,6 +27,7 @@ Map<String, dynamic> test(String input, {String? expected}) {
   return {
     'result': result,
     'automaton': isValid ? automaton.toJson() : automaton,
+    'table': isValid ? automaton.toTable() : null,
   };
 }
 
