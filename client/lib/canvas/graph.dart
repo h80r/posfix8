@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphview/GraphView.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:client/provider/automata.dart';
 import 'package:client/provider/canvas/graph.dart';
@@ -10,7 +10,7 @@ import 'components/cart_title.dart';
 import 'components/core/graph_dot.dart';
 import 'components/core/styled_card.dart';
 
-class GraphCanvas extends HookConsumerWidget {
+class GraphCanvas extends ConsumerWidget {
   const GraphCanvas({super.key});
 
   static const routeName = '/graph';
