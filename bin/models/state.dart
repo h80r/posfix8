@@ -2,7 +2,8 @@ class State {
   State()
       : children = {},
         displayed = false,
-        id = globalId++ {
+        id = globalId++,
+        _closure = null {
     finalState = this;
   }
 
@@ -13,6 +14,8 @@ class State {
 
   late State finalState;
   bool displayed;
+
+  List<State>? _closure;
 
   void addChild(String key, State value) {
     children[key] = [...?children[key], value];
@@ -28,6 +31,23 @@ class State {
         child.reset();
       }
     });
+  }
+
+  List<State> get closure {
+    if (_closure != null) return _closure!;
+    calculateClosures();
+    return _closure!;
+  }
+
+  void calculateClosures() {
+    if (_closure != null) return;
+
+    _closure = [this];
+    final states = children['ε'];
+    if (states == null) return;
+    for (final state in states) {
+      _closure!.addAll(state.closure);
+    }
   }
 
   Map<String, dynamic> toJson() {

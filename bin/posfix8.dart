@@ -1,5 +1,6 @@
 import 'package:alfred/alfred.dart';
 
+import 'automaton/closure_generation.dart';
 import 'automaton/table_generation.dart';
 import 'models/state.dart';
 import 'postfixing/expression_conversion.dart';
@@ -27,6 +28,7 @@ Map<String, dynamic> test(String input, {String? expected}) {
   return {
     'result': result,
     'error': isValid ? null : automaton,
+    'closure': isValid ? automaton.toClosureTable() : null,
     'automaton': isValid ? automaton.toTable() : null,
   };
 }
