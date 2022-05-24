@@ -3,7 +3,9 @@ class State {
       : children = {},
         displayed = false,
         id = globalId++,
-        _closure = null {
+        _closure = null,
+        isInitial = false,
+        isFinal = false {
     finalState = this;
   }
 
@@ -16,6 +18,9 @@ class State {
   bool displayed;
 
   List<State>? _closure;
+
+  bool isInitial;
+  bool isFinal;
 
   void addChild(String key, State value) {
     children[key] = [...?children[key], value];
@@ -39,6 +44,27 @@ class State {
     return _closure!;
   }
 
+  List<State> allStates() {
+    final states = [this];
+    if (isFinal) return states;
+
+    for (final child in children.values.expand((value) => value)) {
+      child._stateListing(states);
+    }
+
+    return states;
+  }
+
+  void _stateListing(List<State> states) {
+    if (states.contains(this)) return;
+
+    states.add(this);
+
+    for (final child in children.values.expand((value) => value)) {
+      child._stateListing(states);
+    }
+  }
+
   void calculateClosures() {
     if (_closure != null) return;
 
@@ -50,14 +76,14 @@ class State {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    if (displayed) return {'stateId': id};
-    displayed = true;
-
-    final transitions = children.map(
-      (k, v) => MapEntry(k, v.map((s) => s.toJson()).toList()),
-    );
-
-    return {'stateId': id, 'transitions': transitions};
+  @override
+  String toString() {
+    return '${isInitial ? '>' : isFinal ? '*' : ''}$id';
   }
+
+  @override
+  int get hashCode => id;
+
+  @override
+  bool operator ==(Object other) => other is State && other.id == id;
 }

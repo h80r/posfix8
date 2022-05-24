@@ -1,23 +1,35 @@
 import '../models/state.dart';
 
 State base(String key) {
-  final qf = State();
+  final qf = State()..isFinal = true;
 
   return State()
+    ..isInitial = true
     ..addChild(key, qf)
     ..finalState = qf;
 }
 
-State concatenation(State a, State b) => a
-  ..finalState.addChild('ε', b)
-  ..finalState = b.finalState;
+State concatenation(State a, State b) {
+  a.finalState.isFinal = false;
+  b.isInitial = false;
+
+  return a
+    ..finalState.addChild('ε', b)
+    ..finalState = b.finalState;
+}
 
 State union(State a, State b) {
+  a.isInitial = false;
+  a.finalState.isFinal = false;
+  b.isInitial = false;
+  b.finalState.isFinal = false;
+
   final q0 = State()
+    ..isInitial = true
     ..addChild('ε', a)
     ..addChild('ε', b);
 
-  final qf = State();
+  final qf = State()..isFinal = true;
   a.finalState.addChild('ε', qf);
   b.finalState.addChild('ε', qf);
 
@@ -25,9 +37,12 @@ State union(State a, State b) {
 }
 
 State kleene(State a) {
-  final qf = State();
+  final qf = State()..isFinal = true;
+  a.isInitial = false;
+  a.finalState.isFinal = false;
 
   final q0 = State()
+    ..isInitial = true
     ..addChild('ε', a)
     ..addChild('ε', qf);
 
