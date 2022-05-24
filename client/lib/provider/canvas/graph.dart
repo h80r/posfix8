@@ -26,11 +26,9 @@ class GraphNotifier extends StateNotifier<Graph> {
   void loadAutomata() {
     final newGraph = Graph();
 
-    final states = (_automata['states'] as List<String>)
-        .map((e) => e.replaceAll('*', ''))
-        .toList();
+    final states = _automata['states'] as List<String>;
     final alphabet = _automata['alphabet'] as List<String>;
-    final table = _automata['table'] as List<List<List<String>?>>;
+    final table = _automata['table'] as List<List<String>>;
 
     final nodes = states.map(Node.Id).toList();
     newGraph.addNodes(nodes);
@@ -38,22 +36,19 @@ class GraphNotifier extends StateNotifier<Graph> {
     final edges = <Edge>[];
     for (var i = 0; i < states.length; i++) {
       for (var j = 0; j < alphabet.length; j++) {
-        final transition = table[i][j];
-        if (transition == null) continue;
+        final target = table[i][j];
 
         final from = nodes[i];
         final symbol = alphabet[j];
 
-        for (final to in transition) {
-          final toNode = nodes.firstWhere((e) => e.key?.value == to);
-          edges.add(Edge(
-            from,
-            toNode,
-            paint: Paint()
-              ..color = _getColor(symbol)
-              ..strokeWidth = 2.0,
-          ));
-        }
+        final toNode = nodes.firstWhere((e) => e.key?.value == target);
+        edges.add(Edge(
+          from,
+          toNode,
+          paint: Paint()
+            ..color = _getColor(symbol)
+            ..strokeWidth = 2.0,
+        ));
       }
     }
 

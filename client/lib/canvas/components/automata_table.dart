@@ -14,7 +14,7 @@ class AutomataTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final alphabet = automata['alphabet'] as List<String>;
     final states = automata['states'] as List<String>;
-    final table = automata['table'] as List<List<List<String>?>>;
+    final table = automata['table'] as List<List<String>>;
 
     return Table(
       children: [
@@ -47,10 +47,7 @@ class AutomataTable extends StatelessWidget {
               ),
               ...table[i]
                   .map((e) => TableCell(
-                        child: Text(
-                          e == null ? '' : '{${e.join(', ')}}',
-                          textAlign: TextAlign.center,
-                        ),
+                        child: Text(e, textAlign: TextAlign.center),
                       ))
                   .toList(),
             ],

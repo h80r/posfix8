@@ -44,7 +44,7 @@ class HomeNotifier extends StateNotifier<HomeSchema> {
 
       final table = (automaton['table'] as List)
           .cast<List>()
-          .map((e) => e.cast<List?>().map((e) => e?.cast<String>()).toList())
+          .map((e) => e.cast<String>().toList())
           .toList();
 
       _automataNotifier.state = {
